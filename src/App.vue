@@ -1,30 +1,24 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <el-button @click="startHacking">Start</el-button>
+    <div id="app">
+        <yml></yml>
     </div>
-  </div>
 </template>
 
 <script>
+import Yml from "./components/yml/Yml";
 export default {
-  methods: {
-    startHacking () {
-      this.$notify({
-        title: 'It works!',
-        type: 'success',
-        message: 'We\'ve laid the ground work for you. It\'s time for you to build something epic!',
-        duration: 5000
-      })
-    }
-  }
-}
+    components: {
+        Yml,
+    },
+};
 </script>
 
 <style>
+body {
+    background-color: #f4f6fc;
+}
 #app {
-  font-family: Helvetica, sans-serif;
-  text-align: center;
+    padding: 32px;
+    font-family: Helvetica, sans-serif;
 }
 </style>
