@@ -158,82 +158,94 @@ export default {
                                         "google-sheet",
                                         "csv",
                                     ],
-                                },
-                                {
-                                    key: "config",
-                                    type: "object",
-                                    level: this.level + 2,
-                                    value: [
-                                        {
-                                            key: "url",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "",
-                                        },
-                                        {
-                                            key: "space_key",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "SLAF",
-                                        },
-                                        {
-                                            key: "auth",
-                                            type: "object",
-                                            level: this.level + 3,
-                                            value: [
-                                                {
-                                                    key: "username",
-                                                    type: "text",
-                                                    level: this.level + 4,
-                                                    value: "",
-                                                },
-                                                {
-                                                    key: "password",
-                                                    type: "text",
-                                                    level: this.level + 4,
-                                                    value: "",
-                                                },
-                                            ],
-                                        },
-                                    ],
-                                },
-                                {
-                                    key: "config",
-                                    type: "object",
-                                    level: this.level + 2,
-                                    value: [
-                                        {
-                                            key: "id",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "",
-                                        },
-                                        {
-                                            key: "apikey",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "",
-                                        },
-                                    ],
-                                },
-                                {
-                                    key: "config",
-                                    type: "object",
-                                    level: this.level + 2,
-                                    value: [
-                                        {
-                                            key: "folder",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "",
-                                        },
-                                        {
-                                            key: "delimiter",
-                                            type: "text",
-                                            level: this.level + 3,
-                                            value: "",
-                                        },
-                                    ],
+                                    conditions: {
+                                        confluence: [
+                                            {
+                                                key: "config",
+                                                type: "object",
+                                                level: this.level + 2,
+                                                value: [
+                                                    {
+                                                        key: "url",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "",
+                                                    },
+                                                    {
+                                                        key: "space_key",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "SLAF",
+                                                    },
+                                                    {
+                                                        key: "auth",
+                                                        type: "object",
+                                                        level: this.level + 3,
+                                                        value: [
+                                                            {
+                                                                key: "username",
+                                                                type: "text",
+                                                                level:
+                                                                    this.level +
+                                                                    4,
+                                                                value: "",
+                                                            },
+                                                            {
+                                                                key: "password",
+                                                                type: "text",
+                                                                level:
+                                                                    this.level +
+                                                                    4,
+                                                                value: "",
+                                                            },
+                                                        ],
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                        "google-sheet": [
+                                            {
+                                                key: "config",
+                                                type: "object",
+                                                level: this.level + 2,
+                                                value: [
+                                                    {
+                                                        key: "id",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "",
+                                                    },
+                                                    {
+                                                        key: "apikey",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "",
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                        csv: [
+                                            {
+                                                key: "config",
+                                                type: "object",
+                                                level: this.level + 2,
+                                                value: [
+                                                    {
+                                                        key: "folder",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "",
+                                                    },
+                                                    {
+                                                        key: "delimiter",
+                                                        type: "text",
+                                                        level: this.level + 3,
+                                                        value: "",
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
                                 },
                                 {
                                     key: "startSymbol",
@@ -269,55 +281,142 @@ export default {
                                 "elastic-search",
                                 "http-html-report",
                             ],
-                        },
-                        {
-                            key: "enabled",
-                            type: "boolean",
-                            level: this.level + 2,
-                            value: false,
-                        },
-                        {
-                            key: "config",
-                            type: "object",
-                            level: this.level + 2,
-                            value: [
-                                {
-                                    key: "path",
-                                    type: "text",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                                {
-                                    key: "url",
-                                    type: "text",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                                {
-                                    key: "method",
-                                    type: "text",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                                {
-                                    key: "showErrors",
-                                    type: "boolean",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                                {
-                                    key: "onlyFailed",
-                                    type: "boolean",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                                {
-                                    key: "reportUrl",
-                                    type: "text",
-                                    level: this.level + 3,
-                                    value: "",
-                                },
-                            ],
+                            conditions: {
+                                file: [
+                                    {
+                                        key: "enabled",
+                                        type: "boolean",
+                                        level: this.level + 2,
+                                        value: false,
+                                    },
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 2,
+                                        value: [
+                                            {
+                                                key: "path",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                                slack: [
+                                    {
+                                        key: "enabled",
+                                        type: "boolean",
+                                        level: this.level + 2,
+                                        value: true,
+                                    },
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 2,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                            {
+                                                key: "showErrors",
+                                                type: "boolean",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                            {
+                                                key: "onlyFailed",
+                                                type: "boolean",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                            {
+                                                key: "reportUrl",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                                http: [
+                                    {
+                                        key: "enabled",
+                                        type: "boolean",
+                                        level: this.level + 2,
+                                        value: true,
+                                    },
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 2,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                            {
+                                                key: "method",
+                                                type: "select",
+                                                level: this.level + 3,
+                                                value: "POST",
+                                                selectOptions: [
+                                                    "POST",
+                                                    "PATCH",
+                                                    "PUT",
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                ],
+                                "elastic-search": [
+                                    {
+                                        key: "enabled",
+                                        type: "boolean",
+                                        level: this.level + 2,
+                                        value: true,
+                                    },
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 2,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                                "http-html-report": [
+                                    {
+                                        key: "enabled",
+                                        type: "boolean",
+                                        level: this.level + 2,
+                                        value: true,
+                                    },
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 2,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 3,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
                         },
                     ],
                     plugins: [
@@ -366,25 +465,6 @@ export default {
                                 ],
                             },
                         },
-                        // {
-                        //     key: "config",
-                        //     type: "object",
-                        //     level: this.level + 1,
-                        //     value: [
-                        //         {
-                        //             key: "url",
-                        //             type: "text",
-                        //             level: this.level + 2,
-                        //             value: "",
-                        //         },
-                        //         {
-                        //             key: "pageObject",
-                        //             type: "text",
-                        //             level: this.level + 2,
-                        //             value: "",
-                        //         },
-                        //     ],
-                        // },
                     ],
                 },
             },

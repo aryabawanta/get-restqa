@@ -117,7 +117,7 @@ export default {
                             code += this.getCodeFromInput(
                                 input.conditions[input.value][index],
                                 true,
-                                increment_indent
+                                2
                             );
                         }
                     }
