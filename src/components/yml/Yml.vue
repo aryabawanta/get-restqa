@@ -14,6 +14,7 @@
                         :type="input.type"
                         :level="input.level"
                         :select-options="typeof input.selectOptions=='undefined' ? []:input.selectOptions"
+                        :conditions="typeof input.conditions=='undefined' ? {}:input.conditions"
                     ></yml-input>
                 </div>
             </el-card>
@@ -100,8 +101,26 @@ export default {
                 case "text":
                 case "number":
                 case "boolean":
+                    code += indent + `${input.key}: ${input.value}\n`;
+                    break;
                 case "select":
                     code += indent + `${input.key}: ${input.value}\n`;
+                    if (
+                        typeof input.conditions != "undefined" &&
+                        Object.keys(input.conditions[input.value]).length > 0
+                    ) {
+                        for (
+                            let index = 0;
+                            index < input.conditions[input.value].length;
+                            index++
+                        ) {
+                            code += this.getCodeFromInput(
+                                input.conditions[input.value][index],
+                                true,
+                                increment_indent
+                            );
+                        }
+                    }
                     break;
                 case "object":
                     code += indent + `${input.key}:\n`;
@@ -117,7 +136,8 @@ export default {
                 case "array":
                     code += indent + `${input.key}:\n`;
                     for (let index = 0; index < input.value.length; index++) {
-                        var new_indent_length = (input.level + 1) * 2 + 1;
+                        var new_indent_length =
+                            (input.level + 1) * 2 + 1 + increment_indent;
                         code += new Array(new_indent_length).join(" ") + "- ";
                         var counter = 0;
                         for (const property in input.value[index]) {
@@ -125,7 +145,7 @@ export default {
                             code += this.getCodeFromInput(
                                 value,
                                 counter == 0 ? false : true,
-                                2
+                                increment_indent + 2
                             );
                             counter++;
                         }

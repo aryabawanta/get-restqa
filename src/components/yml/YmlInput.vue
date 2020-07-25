@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[`mb-10 inputcontainer`, level > 0 ? 'noborder' : 'pb-10']"
-        :style="`padding-left:${level * 10}px`"
+        :style="`padding-left:${indent}px`"
     >
         <div class="mb-10">
             <h3 v-if="level == 0">{{ inputkey }}</h3>
@@ -37,6 +37,7 @@
                     :type="input.type"
                     :level="input.level"
                     :select-options="typeof input.selectOptions=='undefined' ? []:input.selectOptions"
+                    :conditions="typeof input.conditions=='undefined' ? {}:input.conditions"
                 ></yml-input>
             </template>
             <div v-else-if="['array'].includes(type)">
@@ -47,7 +48,9 @@
                         `padding-left:10px;display:flex;flex-direction:column;`
                     "
                 >
-                    <div>{{ inputkey }} {{ arrayKey + 1 }}</div>
+                    <el-divider content-position="left">
+                        <small style="font-weight:bold">{{ inputkey }} {{ arrayKey + 1 }}</small>
+                    </el-divider>
                     <div class="w-full">
                         <yml-input
                             :key="input.key + '_' + arrayKey + '_' + index"
@@ -57,6 +60,7 @@
                             :type="input.type"
                             :level="input.level"
                             :select-options="typeof input.selectOptions=='undefined' ? []:input.selectOptions"
+                            :conditions="typeof input.conditions=='undefined' ? {}:input.conditions"
                         ></yml-input>
                     </div>
                 </div>
@@ -73,6 +77,19 @@
                     >Add {{ inputkey }}</el-button>
                 </div>
             </div>
+
+            <template v-if="Object.keys(conditions).length > 0">
+                <yml-input
+                    :key="condition_input.key + '_conditions_' + conditions_index+'_'+inputValue"
+                    v-for="(condition_input, conditions_index) in conditions[inputValue]"
+                    :inputkey="condition_input.key"
+                    v-model="condition_input.value"
+                    :type="condition_input.type"
+                    :level="condition_input.level"
+                    :select-options="typeof condition_input.selectOptions=='undefined' ? []:condition_input.selectOptions"
+                    :conditions="typeof condition_input.conditions=='undefined' ? {}:condition_input.conditions"
+                ></yml-input>
+            </template>
         </div>
     </div>
 </template>
@@ -80,6 +97,9 @@
 export default {
     name: "YmlInput",
     props: {
+        conditions: {
+            type: Object,
+        },
         inputkey: {
             default: "",
             type: String,
@@ -89,7 +109,6 @@ export default {
             type: Number,
         },
         selectOptions: {
-            default: [],
             type: Array,
         },
         type: {
@@ -308,26 +327,64 @@ export default {
                             level: this.level + 1,
                             value: "restqapi",
                             selectOptions: ["restqapi", "restqui"],
+                            conditions: {
+                                restqapi: [
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 1,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 2,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                                restqui: [
+                                    {
+                                        key: "config",
+                                        type: "object",
+                                        level: this.level + 1,
+                                        value: [
+                                            {
+                                                key: "url",
+                                                type: "text",
+                                                level: this.level + 2,
+                                                value: "",
+                                            },
+                                            {
+                                                key: "pageObject",
+                                                type: "text",
+                                                level: this.level + 2,
+                                                value: "",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
                         },
-                        {
-                            key: "config",
-                            type: "object",
-                            level: this.level + 1,
-                            value: [
-                                {
-                                    key: "url",
-                                    type: "text",
-                                    level: this.level + 2,
-                                    value: "",
-                                },
-                                {
-                                    key: "pageObject",
-                                    type: "text",
-                                    level: this.level + 2,
-                                    value: "",
-                                },
-                            ],
-                        },
+                        // {
+                        //     key: "config",
+                        //     type: "object",
+                        //     level: this.level + 1,
+                        //     value: [
+                        //         {
+                        //             key: "url",
+                        //             type: "text",
+                        //             level: this.level + 2,
+                        //             value: "",
+                        //         },
+                        //         {
+                        //             key: "pageObject",
+                        //             type: "text",
+                        //             level: this.level + 2,
+                        //             value: "",
+                        //         },
+                        //     ],
+                        // },
                     ],
                 },
             },
@@ -337,8 +394,19 @@ export default {
         inputValue: function (value) {
             if (typeof value == "string") {
                 this.$emit("input", value);
-                console.log(value);
             }
+        },
+    },
+    computed: {
+        indent() {
+            if (
+                typeof this.$parent.conditions != "undefined" &&
+                Object.keys(this.$parent.conditions).length > 0
+            ) {
+                return 0;
+            }
+
+            return this.level * 10;
         },
     },
     methods: {
