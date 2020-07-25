@@ -18,6 +18,16 @@
                     <el-option label="false" :value="false"></el-option>
                 </el-select>
             </template>
+            <template v-else-if="type == 'select'">
+                <el-select v-model="inputValue" placeholder="Value" class="w-full">
+                    <el-option
+                        :key="index"
+                        v-for="(option, index) in selectOptions"
+                        :label="option"
+                        :value="option"
+                    ></el-option>
+                </el-select>
+            </template>
             <template v-else-if="['object'].includes(type)">
                 <yml-input
                     :key="input.key + '_' + index"
@@ -26,6 +36,7 @@
                     v-model="input.value"
                     :type="input.type"
                     :level="input.level"
+                    :select-options="typeof input.selectOptions=='undefined' ? []:input.selectOptions"
                 ></yml-input>
             </template>
             <div v-else-if="['array'].includes(type)">
@@ -45,6 +56,7 @@
                             v-model="input.value"
                             :type="input.type"
                             :level="input.level"
+                            :select-options="typeof input.selectOptions=='undefined' ? []:input.selectOptions"
                         ></yml-input>
                     </div>
                 </div>
@@ -75,6 +87,10 @@ export default {
         level: {
             default: 0,
             type: Number,
+        },
+        selectOptions: {
+            default: [],
+            type: Array,
         },
         type: {
             default: "text",
@@ -115,9 +131,14 @@ export default {
                             value: [
                                 {
                                     key: "channel",
-                                    type: "text",
+                                    type: "select",
                                     level: this.level + 2,
-                                    value: "",
+                                    value: "confluence",
+                                    selectOptions: [
+                                        "confluence",
+                                        "google-sheet",
+                                        "csv",
+                                    ],
                                 },
                                 {
                                     key: "config",
@@ -219,9 +240,16 @@ export default {
                     outputs: [
                         {
                             key: "type",
-                            type: "text",
+                            type: "select",
                             level: this.level + 2,
                             value: "file",
+                            selectOptions: [
+                                "file",
+                                "slack",
+                                "http",
+                                "elastic-search",
+                                "http-html-report",
+                            ],
                         },
                         {
                             key: "enabled",
@@ -276,9 +304,10 @@ export default {
                     plugins: [
                         {
                             key: "name",
-                            type: "text",
+                            type: "select",
                             level: this.level + 1,
-                            value: "",
+                            value: "restqapi",
+                            selectOptions: ["restqapi", "restqui"],
                         },
                         {
                             key: "config",
