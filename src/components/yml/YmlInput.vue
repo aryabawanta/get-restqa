@@ -472,7 +472,7 @@ export default {
     },
     watch: {
         inputValue: function (value) {
-            if (typeof value == "string") {
+            if (["string", "boolean"].includes(typeof value)) {
                 this.$emit("input", value);
             }
         },
